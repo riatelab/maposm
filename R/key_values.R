@@ -56,7 +56,7 @@ kv_street = list(
     "tertiary_link",
     "unclassified",
     "residential",
-    "service",
+    # "service",
     "living_street",
     "pedestrian"
   )

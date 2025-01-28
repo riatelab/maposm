@@ -13,13 +13,13 @@ library(maposm)
 bb1 <- osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
 lon <- mean(bb1[1, ])
 lat <- mean(bb1[2, ])
-res <- get_city(c(lon, lat), r = 750)
-#> Getting buildings: 4.863 sec elapsed
-#> Getting green areas: 2.968 sec elapsed
-#> Getting water bodies: 3.214 sec elapsed
-#> Getting roads: 1.148 sec elapsed
-#> Getting streets: 2.273 sec elapsed
-#> Getting railways: 1.159 sec elapsed
+res <- get_city(c(lon, lat), r = 2000)
+#> Getting buildings: 26.422 sec elapsed
+#> Getting green areas: 1.918 sec elapsed
+#> Getting water bodies: 2.608 sec elapsed
+#> Getting roads: 1.328 sec elapsed
+#> Getting streets: 4.099 sec elapsed
+#> Getting railways: 0.784 sec elapsed
 ```
 
 ``` r
@@ -34,6 +34,8 @@ mf_map(res$street, col = "white", border = "white", lwd = .5, add = TRUE)
 mf_map(res$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
 mf_map(res$circle, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
 dev.off()
+#> png 
+#>   2
 ```
 
 ![](man/figures/README-toulouse.png)

@@ -25,10 +25,10 @@ library(maposm)
 bb1 <- osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
 lon <- mean(bb1[1, ])
 lat <- mean(bb1[2, ])
-res <- get_city(c(lon, lat), r = 750)
+res <- get_city(c(lon, lat), r = 2000)
 ```
 
-```{r cars, out.width=10, out.heigh = 10, eval=F}
+```{r cars, out.width=10, out.heigh = 10, eval=T}
 library(mapsf)
 mf_export(res$circle, width = 1000, height = 1000, filename = "man/figures/README-toulouse.png")
 mf_map(res$circle, col = "#f2efe9", border = NA, add = TRUE)
