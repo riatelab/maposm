@@ -91,3 +91,61 @@ unify = function(x, y){
     return(x)
   }
 }
+
+#' @importFrom sf st_coordinates st_geometry<- st_linestring
+#' st_point st_polygon
+empty_sf = function(x, zone, type){
+  if (type == "POINT"){
+    x = st_sf(geom = st_sfc(st_point()), crs = st_crs(zone))
+  }
+  if (type == "POLYGON"){
+    x = st_sf(geom = st_sfc(st_polygon()), crs = st_crs(zone))
+  }
+  if (type == "LINE"){
+    x = st_sf(geom = st_sfc(st_linestring()), crs = st_crs(zone))
+  }
+  new_bb = st_bbox(zone)
+  attr(st_geometry(x), "bbox") = new_bb
+  x
+}
+
+
+
+zone_input = function(x, r){
+  prj = "EPSG:3857"
+  if (inherits(x = x, what = c("sfc", "sf"))) {
+    lx <- length(st_geometry(x))
+    if (lx != 1) {
+      stop("x must have 1 row or element.", call. = FALSE)
+    }
+    type <- sf::st_geometry_type(x, by_geometry = TRUE)
+    if (type == "POINT") {
+      prj = st_crs(x)
+      x = st_transform(x, "EPSG:4326")
+      x = c(st_coordinates(x)[1], st_coordinates(x)[2])
+    } else if (!type %in% c("POLYGON", "MULTIPOLYGON")){
+      stop("x must be a POINT or (MULTI)POLYGON.", call. = FALSE)
+    } else {
+      return(x)
+    }
+  }
+
+  if (is.vector(x) && length(x) == 2 && is.numeric(x)) {
+    if (x[1] > 180 || x[1] < -180 || x[2] > 90 || x[2] < -90) {
+      stop(
+        paste0(
+          "longitude is bounded by the interval [-180, 180], ",
+          "latitude is bounded by the interval [-90, 90]"
+        ),
+        call. = FALSE
+      )
+    }
+    zone = data.frame(x = x[1], y = x[2]) |>
+      st_as_sf(coords = c("x", "y"), crs = "EPSG:4326") |>
+      st_transform(prj) |>
+      st_buffer(dist = r)
+    return(zone)
+  } else {
+    stop("x should be an sf or sfc object, or a couple of coordinates.")
+  }
+}

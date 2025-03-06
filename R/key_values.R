@@ -18,9 +18,10 @@ kv_green = list(
 )
 
 kv_water = list("natural" = c("water", "bay", "strait"),
-                "place" = c("sea", "ocean"))
-
+                "place" = c("sea", "ocean"),
+                "landuse" = "basin")
 kv_water2 = list("waterway" = c("river", "canal"))
+kv_water3 = list("natural"="coastline")
 
 kv_building = "building"
 
