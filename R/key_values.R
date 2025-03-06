@@ -35,7 +35,8 @@ kv_urban = list(
     "civic_admin",
     "railway",
     "garage"
-  )
+  ),
+  "man_made" = "pier"
 )
 
 kv_road = list(
