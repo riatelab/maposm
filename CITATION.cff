@@ -1,0 +1,129 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "maposm" in publications use:'
+type: software
+license: GPL-3.0-only
+title: 'maposm: Get Map Layers from OpenStreetMap'
+version: 0.1.0
+abstract: Download and assemble multiple geographic layers from the OpenStreetMap
+  database for mapping purposes.
+authors:
+- family-names: Giraud
+  given-names: Timothée
+  email: timothee.giraud@cnrs.fr
+  orcid: https://orcid.org/0000-0002-1932-3323
+contact:
+- family-names: Giraud
+  given-names: Timothée
+  email: timothee.giraud@cnrs.fr
+  orcid: https://orcid.org/0000-0002-1932-3323
+references:
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  url: https://www.R-project.org/
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2025'
+  version: '>= 3.6.0'
+- type: software
+  title: sf
+  abstract: 'sf: Simple Features for R'
+  notes: Imports
+  url: https://r-spatial.github.io/sf/
+  repository: https://CRAN.R-project.org/package=sf
+  authors:
+  - family-names: Pebesma
+    given-names: Edzer
+    email: edzer.pebesma@uni-muenster.de
+    orcid: https://orcid.org/0000-0001-8049-7069
+  year: '2025'
+  doi: 10.32614/CRAN.package.sf
+- type: software
+  title: lwgeom
+  abstract: 'lwgeom: Bindings to Selected ''liblwgeom'' Functions for Simple Features'
+  notes: Imports
+  url: https://r-spatial.github.io/lwgeom/
+  repository: https://CRAN.R-project.org/package=lwgeom
+  authors:
+  - family-names: Pebesma
+    given-names: Edzer
+    email: edzer.pebesma@uni-muenster.de
+    orcid: https://orcid.org/0000-0001-8049-7069
+  year: '2025'
+  doi: 10.32614/CRAN.package.lwgeom
+- type: software
+  title: tictoc
+  abstract: 'tictoc: Functions for Timing R Scripts, as Well as Implementations of
+    "Stack" and "StackList" Structures'
+  notes: Imports
+  url: https://github.com/jabiru/tictoc
+  repository: https://CRAN.R-project.org/package=tictoc
+  authors:
+  - family-names: Izrailev
+    given-names: Sergei
+  year: '2025'
+  doi: 10.32614/CRAN.package.tictoc
+- type: software
+  title: tools
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2025'
+- type: software
+  title: mapsf
+  abstract: 'mapsf: Thematic Cartography'
+  notes: Imports
+  url: https://riatelab.github.io/mapsf/
+  repository: https://CRAN.R-project.org/package=mapsf
+  authors:
+  - family-names: Giraud
+    given-names: Timothée
+    email: timothee.giraud@cnrs.fr
+    orcid: https://orcid.org/0000-0002-1932-3323
+  doi: 10.32614/CRAN.package.mapsf
+  year: '2025'
+- type: software
+  title: graphics
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2025'
+- type: software
+  title: osmdata
+  abstract: 'osmdata: Import ''OpenStreetMap'' Data as Simple Features or Spatial
+    Objects'
+  notes: Imports
+  url: https://docs.ropensci.org/osmdata/
+  repository: https://CRAN.R-project.org/package=osmdata
+  authors:
+  - family-names: Padgham
+    given-names: Mark
+    email: mark.padgham@email.com
+  - family-names: Rudis
+    given-names: Bob
+  - family-names: Lovelace
+    given-names: Robin
+  - family-names: Salmon
+    given-names: Maëlle
+  - family-names: Maspons
+    given-names: Joan
+    orcid: https://orcid.org/0000-0003-2286-8727
+  year: '2025'
+  doi: 10.32614/CRAN.package.osmdata
+
