@@ -1,11 +1,23 @@
-#' @title Get City Map Layers
+#' @title Get map layers
 #' @description Download various OpenStreetMap
-#' features to create city map layers.
-#' @param x city center coordinates
-#' @param r radi of the extraction
-#' @param verbose output messages
+#' features to create map layers.
+#' @param x an sf or sfc object, or a couple of coordinates
+#' @param r radi of the extraction if x is an sf POINT or a couple of
+#' coordinates
+#' @param quiet suppress info
 #'
-#' @return A list of layers is returned.
+#' @return
+#' A list of map layers is returned :
+#' - *zone*, the extraction zone;
+#' - *urban*, urban areas;
+#' - *building*, buildings (if the extraction zone area is below 15 km^2);
+#' - *green*, green spaces;
+#' - *road*, main roads;
+#' - *street*, secondary roads;
+#' - *railway*, railroads (line);
+#' - *water*, water bodies
+#'
+#' @md
 #' @export
 #'
 #' @importFrom sf st_as_sf st_bbox st_buffer st_geometry st_transform st_area
@@ -15,32 +27,23 @@
 #' @importFrom tictoc tic toc
 #' @examples
 #' \dontrun{
-#' bb1 <- osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
-#' lon <- mean(bb1[1, ])
-#' lat <- mean(bb1[2, ])
-#' res <- get_city(c(lon, lat), dist = 700)
-#' if (require("mapsf")){
-#'   mf_map(res$zone, col = "#f2efe9", border = NA, add = FALSE)
-#'   mf_map(res$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-#'   mf_map(res$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-#'   mf_map(res$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-#'   mf_map(res$road, col = "white", border = "white", lwd = .5, add = TRUE)
-#'   mf_map(res$street, col = "white", border = "white", lwd = .5, add = TRUE)
-#'   mf_map(res$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-#'   mf_map(res$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
+#' bb1 = osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
+#' lon = mean(bb1[1, ])
+#' lat = mean(bb1[2, ])
+#' res = om_get(c(lon, lat), dist = 700)
+#' om_map(res)
 #' }
-#' }
-get_city = function(x, r = 1000, verbose = TRUE){
-  verbose = !verbose
+om_get = function(x, r = 1000, quiet = FALSE){
   zone = zone_input(x, r)
   bbox = st_buffer(zone, r / 10) |>
     st_transform("EPSG:4326") |>
     st_bbox()
   my_opq = opq(bbox = bbox)
 
-  tic("Getting urban patches")
+  tic("Getting urban areas")
   urban = get_data(kv_urban, my_opq) |>
     get_poly(crop = zone, buffer = c(2, -2))
+  toc(quiet = quiet)
 
   if (as.numeric(st_area(zone)) < 15000000 ) {
     tic("Getting buildings")
@@ -48,34 +51,35 @@ get_city = function(x, r = 1000, verbose = TRUE){
       get_poly(crop = zone, buffer = c(2, -2))
   } else {
     building = NULL
-    warning("'r' is large. You'll not get buildings.",
-            call. = FALSE)
+    if(quiet == TRUE){
+      message("The requested area is too large for downloading buildings.")
+    }
   }
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
   tic("Getting green areas")
   green = get_data(kv_green, my_opq) |>
     get_poly(crop = zone, buffer = c(5, -5))
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
   tic("Getting roads")
   road_raw = get_data(kv_road, my_opq)
   road1 = get_line(x = road_raw, crop = zone, buffer = c(10, -4))
   road2 = get_poly(x = road_raw, crop = zone, buffer = c(4, -4))
   road = unify(road1, road2)
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
   tic("Getting streets")
   street_raw = get_data(kv_street, my_opq)
   street1 = get_line(x = street_raw, crop = zone, buffer = c(6, -3))
   street2 = get_poly(x = street_raw, crop = zone, buffer = c(3, -3))
   street = unify(street1, street2)
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
   tic("Getting railways")
   railway = get_data(kv_railway, my_opq) |>
     get_line(crop = zone, return = "line")
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
 
   tic("Getting water bodies")
@@ -94,7 +98,7 @@ get_city = function(x, r = 1000, verbose = TRUE){
   }
   water = unify(water1, water2)
   water = unify(water, water3)
-  toc(quiet = verbose)
+  toc(quiet = quiet)
 
   if (is.null(green)) {
     green = empty_sf(green, zone, "POLYGON")
@@ -119,8 +123,15 @@ get_city = function(x, r = 1000, verbose = TRUE){
   }
 
 
-  return(list(
-    zone = zone, green = green, water = water, railway = railway,
-    road = road, street = street, building = building, urban = urban
-  ))
+  return(
+    list(
+      zone = zone,
+      urban = urban,
+      building = building,
+      green = green,
+      road = road,
+      street = street,
+      railway = railway,
+      water = water
+    ))
 }

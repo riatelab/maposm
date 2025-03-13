@@ -114,11 +114,11 @@ empty_sf = function(x, zone, type){
 zone_input = function(x, r){
   prj = "EPSG:3857"
   if (inherits(x = x, what = c("sfc", "sf"))) {
-    lx <- length(st_geometry(x))
+    lx = length(st_geometry(x))
     if (lx != 1) {
       stop("x must have 1 row or element.", call. = FALSE)
     }
-    type <- sf::st_geometry_type(x, by_geometry = TRUE)
+    type = sf::st_geometry_type(x, by_geometry = TRUE)
     if (type == "POINT") {
       prj = st_crs(x)
       x = st_transform(x, "EPSG:4326")
