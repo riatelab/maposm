@@ -9,62 +9,65 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-")
 
 ```
-# maposm
 
-## Install
+# maposm <img src="man/figures/logo.png" align="right" width="140"/>
+
+`maposm` is an R package whose main purpose is to download and assemble multiple 
+geographic layers from the OpenStreetMap database for mapping purposes.
+
+OpenStreetMap data is downloaded using the [`osmdata`](https://docs.ropensci.org/osmdata/) package,
+which in turn uses the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API). 
+
+The downloaded data is then merged and simplified.
+
+ The layers created are:  
+- Urban areas
+- Buildings
+- Green spaces
+- Main roads 
+- Secondary roads 
+- Railroads 
+- Water bodies
+
+
+
+
+## Installation
+You can install `maposm` from the r-universe.
+
 ```{r, eval=FALSE}
 install.packages("maposm", repos = "https://riatelab.r-universe.dev")
 ```
 
-## Example
-This is a basic example which shows you how to solve a common problem:
+## Demo
 
-```{r example}
-library(sf)
+`om_get()` is used to download, merge and simplify the geographic layers.       
+`om_map()` can be used to map the layers. 
+
+```{r example, fig.width=7, fig.height=7}
 library(maposm)
+castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
+om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
+```
+
+Several themes are available to map the layers ("light", "dark" and "grey").
+
+```{r example2, fig.width=7, fig.height=7}
+m = mapsf::mf_get_mtq()[33, ]
+lmv = om_get(x = m, quiet = TRUE)
+om_map(x = lmv, title = "Le Morne-Vert, Martinique", theme = "grey")
+```
+
+You can also use your prefered  library to map the layers.   
+```{r example3, fig.width=7, fig.height=7}
 library(mapsf)
-
-castries <- get_city(x = c(-60.990260, 14.009623), r = 2000)
-mf_map(castries$zone, col = "#f2efe9", border = NA, add = FALSE)
-mf_map(castries$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
-mf_map(castries$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-mf_map(castries$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-mf_map(castries$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-mf_map(castries$road, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(castries$street, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(castries$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-mf_map(castries$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
-mf_credits(txt = "\ua9 OpenStreetMap contributors")
-mf_scale(size = 500, scale_units = "m")
-mf_title("Castries, Saint Lucia")
-```
-
-
-```{r example2}
-m <- mapsf::mf_get_mtq()[1, ]
-ajoupa <- get_city(x = m)
-mf_map(ajoupa$zone, col = "#f2efe9", border = NA, add = FALSE)
-mf_map(ajoupa$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
-mf_map(ajoupa$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-mf_map(ajoupa$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-mf_map(ajoupa$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-mf_map(ajoupa$road, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(ajoupa$street, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(ajoupa$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-mf_map(ajoupa$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
-mf_credits(txt = "\ua9 OpenStreetMap contributors")
-mf_scale(size = 500, scale_units = "m")
-mf_title("L'Ajoupa-Bouillon, Martinique")
-```
-
-
-```{r example3}
-roseau <- st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
+roseau = st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
                    coords = c("lon", "lat"), 
                    crs = "EPSG:4326") |>
   st_transform("EPSG:3857") |>
   st_buffer(dist = 500, nQuadSegs = 2) |> 
-  get_city()
+  om_get(quiet = TRUE)
+
 mf_map(roseau$zone, col = "#f2efe9", border = NA, add = FALSE)
 mf_map(roseau$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
 mf_map(roseau$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
@@ -77,6 +80,18 @@ mf_map(roseau$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
 mf_credits(txt = "\ua9 OpenStreetMap contributors")
 mf_scale(size = 100, scale_units = "m")
 mf_title("Roseau, Dominique")
+
+```
+
+
+`om_write()` can be used to write the layers to a geopackage file.     
+`om_read()` can be used to read the geopackages. 
+
+```{r, eval=FALSE}
+# save
+om_write(x = roseau, filename = "roseau.gpkg")
+# import
+om_read(x = "roseau.gpkg")
 ```
 
 

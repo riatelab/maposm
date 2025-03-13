@@ -1,85 +1,80 @@
 
-# maposm
+# maposm <img src="man/figures/logo.png" align="right" width="140"/>
 
-## Install
+`maposm` is an R package whose main purpose is to download and assemble
+multiple geographic layers from the OpenStreetMap database for mapping
+purposes.
+
+OpenStreetMap data is downloaded using the
+[`osmdata`](https://docs.ropensci.org/osmdata/) package, which in turn
+uses the [Overpass
+API](https://wiki.openstreetmap.org/wiki/Overpass_API).
+
+The downloaded data is then merged and simplified.
+
+The layers created are:  
+
+- Urban areas 
+- Buildings 
+- Green spaces 
+- Main roads 
+- Secondary roads 
+- Railroads 
+- Water bodies
+
+## Installation
+
+You can install `maposm` from the r-universe.
 
 ``` r
 install.packages("maposm", repos = "https://riatelab.r-universe.dev")
 ```
 
-## Example
+## Demo
 
-This is a basic example which shows you how to solve a common problem:
+`om_get()` is used to download, merge and simplify the geographic
+layers.  
+`om_map()` can be used to map the layers.
 
 ``` r
-library(sf)
-#> Linking to GEOS 3.13.0, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE
 library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
-library(mapsf)
-
-castries <- get_city(x = c(-60.990260, 14.009623), r = 2000)
-#> Getting buildings: 8.174 sec elapsed
-#> Getting green areas: 0.549 sec elapsed
-#> Getting roads: 0.313 sec elapsed
-#> Getting streets: 1.138 sec elapsed
-#> Getting railways: 0.362 sec elapsed
-#> Getting water bodies: 1.15 sec elapsed
-mf_map(castries$zone, col = "#f2efe9", border = NA, add = FALSE)
-mf_map(castries$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
-mf_map(castries$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-mf_map(castries$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-mf_map(castries$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-mf_map(castries$road, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(castries$street, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(castries$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-mf_map(castries$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
-mf_credits(txt = "\ua9 OpenStreetMap contributors")
-mf_scale(size = 500, scale_units = "m")
-mf_title("Castries, Saint Lucia")
+castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
+#> Getting urban areas: 0.696 sec elapsed
+#> Getting buildings: 8.124 sec elapsed
+#> Getting green areas: 1.591 sec elapsed
+#> Getting roads: 0.335 sec elapsed
+#> Getting streets: 1.147 sec elapsed
+#> Getting railways: 0.253 sec elapsed
+#> Getting water bodies: 10.601 sec elapsed
+om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
 
+Several themes are available to map the layers (“light”, “dark” and
+“grey”).
+
 ``` r
-m <- mapsf::mf_get_mtq()[1, ]
-ajoupa <- get_city(x = m)
-#> Getting buildings: 0.996 sec elapsed
-#> Getting green areas: 0.838 sec elapsed
-#> Getting roads: 0.343 sec elapsed
-#> Getting streets: 0.418 sec elapsed
-#> Getting railways: 0.301 sec elapsed
-#> Getting water bodies: 0.978 sec elapsed
-mf_map(ajoupa$zone, col = "#f2efe9", border = NA, add = FALSE)
-mf_map(ajoupa$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
-mf_map(ajoupa$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-mf_map(ajoupa$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-mf_map(ajoupa$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-mf_map(ajoupa$road, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(ajoupa$street, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(ajoupa$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-mf_map(ajoupa$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
-mf_credits(txt = "\ua9 OpenStreetMap contributors")
-mf_scale(size = 500, scale_units = "m")
-mf_title("L'Ajoupa-Bouillon, Martinique")
+m = mapsf::mf_get_mtq()[33, ]
+lmv = om_get(x = m, quiet = TRUE)
+om_map(x = lmv, title = "Le Morne-Vert, Martinique", theme = "grey")
 ```
 
 ![](man/figures/README-example2-1.png)<!-- -->
 
+You can also use your prefered library to map the layers.
+
 ``` r
-roseau <- st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
+library(mapsf)
+roseau = st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
                    coords = c("lon", "lat"), 
                    crs = "EPSG:4326") |>
   st_transform("EPSG:3857") |>
   st_buffer(dist = 500, nQuadSegs = 2) |> 
-  get_city()
-#> Getting buildings: 1.295 sec elapsed
-#> Getting green areas: 0.566 sec elapsed
-#> Getting roads: 0.399 sec elapsed
-#> Getting streets: 0.516 sec elapsed
-#> Getting railways: 0.386 sec elapsed
-#> Getting water bodies: 1.198 sec elapsed
+  om_get(quiet = TRUE)
+
 mf_map(roseau$zone, col = "#f2efe9", border = NA, add = FALSE)
 mf_map(roseau$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
 mf_map(roseau$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
@@ -95,3 +90,13 @@ mf_title("Roseau, Dominique")
 ```
 
 ![](man/figures/README-example3-1.png)<!-- -->
+
+`om_write()` can be used to write the layers to a geopackage file.  
+`om_read()` can be used to read the geopackages.
+
+``` r
+# save
+om_write(x = roseau, filename = "roseau.gpkg")
+# import
+om_read(x = "roseau.gpkg")
+```
