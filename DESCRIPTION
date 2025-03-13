@@ -1,10 +1,10 @@
 Package: maposm
 Type: Package
-Title: Get City Map Layers from OpenStreetMap
+Title: Get Map Layers from OpenStreetMap
 Version: 0.1.0
 Authors@R: c(person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr",
     role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323")))
-Description: Download various OpenStreetMap features to create city map layers.
+Description: Download and assemble multiple geographic layers from the OpenStreetMap database for mapping purposes.
 License: GPL-3
 Depends: 
     R (>= 3.6.0)
@@ -12,9 +12,10 @@ Imports:
     sf,
     lwgeom,
     tictoc,
+    tools,
+    mapsf,
+    graphics,
     osmdata
-Suggests: 
-    mapsf
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Language: en-US
