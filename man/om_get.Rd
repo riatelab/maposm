@@ -36,7 +36,7 @@ features to create map layers.
 bb1 = osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
 lon = mean(bb1[1, ])
 lat = mean(bb1[2, ])
-res = om_get(c(lon, lat), dist = 700)
+res = om_get(c(lon, lat), r = 700)
 om_map(res)
 }
 }

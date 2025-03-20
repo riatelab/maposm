@@ -17,6 +17,9 @@ Read and import a list of layers.
 }
 \examples{
 \dontrun{
+r = om_get(c(2.17, 41.39), 500)
+om_write(r, "bcn.gpkg")
 r = om_read("bcn.gpkg")
+om_map(r)
 }
 }

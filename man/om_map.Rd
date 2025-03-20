@@ -2,27 +2,21 @@
 % Please edit documentation in R/om_map.R
 \name{om_map}
 \alias{om_map}
-\title{Map layers
-Display a map of the downloaded layers.}
+\title{Map layers}
 \usage{
-om_map(
-  x,
-  title = "Data from OpenStreetMap",
-  theme = c("light", "dark", "grey")
-)
+om_map(x, title = "Data from OpenStreetMap", theme = "light")
 }
 \arguments{
 \item{x}{a list of map layers}
 
 \item{title}{map title}
 
-\item{theme}{cartographic theme}
+\item{theme}{cartographic theme; "light", "dark" or "grey"}
 }
 \value{
 Nothing is returned. A map is displayed.
 }
 \description{
-Map layers
 Display a map of the downloaded layers.
 }
 \examples{

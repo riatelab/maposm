@@ -1,8 +1,9 @@
 #' Map layers
+#'
 #' Display a map of the downloaded layers.
 #' @param x a list of map layers
 #' @param title map title
-#' @param theme cartographic theme
+#' @param theme cartographic theme; "light", "dark" or "grey"
 #'
 #' @returns Nothing is returned. A map is displayed.
 #' @importFrom mapsf mf_map mf_credits mf_scale mf_title
@@ -15,7 +16,8 @@
 #' om_map(r, "Matabiau neighbourhood", "light")
 #'}
 om_map = function(x, title = "Data from OpenStreetMap",
-                  theme = c("light", "dark", "grey")){
+                  theme = "light"){
+
   theme = themes[[theme]]
 
   mf_map(x$zone,     col = theme$zone[1],     border = NA, add = FALSE)
