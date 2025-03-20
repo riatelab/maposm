@@ -91,7 +91,9 @@ om_read(x = "roseau.gpkg")
 ```
 
 
+## Alternatives
 
+- [osmplotr](https://docs.ropensci.org/osmplotr/)
 
 
 

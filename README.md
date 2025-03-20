@@ -43,13 +43,14 @@ library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
 castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 0.752 sec elapsed
-#> Getting buildings: 8.164 sec elapsed
-#> Getting green areas: 0.602 sec elapsed
-#> Getting roads: 0.266 sec elapsed
-#> Getting streets: 1.21 sec elapsed
-#> Getting railways: 0.919 sec elapsed
-#> Getting water bodies: 1.397 sec elapsed
+#> Getting urban areas: 1.344 sec elapsed
+#> Getting buildings: 13.123 sec elapsed
+#> Getting green areas: 0.683 sec elapsed
+#> Getting roads: 0.43 sec elapsed
+#> Getting streets: 1.528 sec elapsed
+#> Getting railways: 0.315 sec elapsed
+#> Linking to GEOS 3.13.1, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE
+#> Getting water bodies: 1.079 sec elapsed
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
@@ -101,3 +102,7 @@ om_write(x = roseau, filename = "roseau.gpkg")
 # import
 om_read(x = "roseau.gpkg")
 ```
+
+## Alternatives
+
+- [osmplotr](https://docs.ropensci.org/osmplotr/)
