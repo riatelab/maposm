@@ -1,25 +1,24 @@
 
 # maposm <img src="man/figures/logo.png" align="right" width="140"/>
 
-`maposm` is an R package whose main purpose is to download and assemble
-multiple geographic layers from the OpenStreetMap database for mapping
-purposes.
-
-OpenStreetMap data is downloaded using the
-[`osmdata`](https://docs.ropensci.org/osmdata/) package, which in turn
+The [OpenStreetMap](https://www.openstreetmap.org/) database provides
+numerous and very detailed geographic layers on a global scale. To
+obtain synthetic information that can be used for cartographic purposes,
+layers must be selected, simplified, merged, or modified.  
+The `maposm` package provides a set of composite layers that are built
+from extractions performed with the
+[`osmdata`](https://docs.ropensci.org/osmdata/) package (which itself
 uses the [Overpass
-API](https://wiki.openstreetmap.org/wiki/Overpass_API).
+API](https://wiki.openstreetmap.org/wiki/Overpass_API)).
 
-The downloaded data is then merged and simplified.
+The resulting layers are:
 
-The layers created are:  
-
-- Urban areas 
-- Buildings 
-- Green spaces 
-- Main roads 
-- Secondary roads 
-- Railroads 
+- Urban areas
+- Buildings
+- Green spaces
+- Main roads
+- Secondary roads
+- Railroads
 - Water bodies
 
 ## Installation
@@ -41,13 +40,13 @@ library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
 castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 0.696 sec elapsed
-#> Getting buildings: 8.124 sec elapsed
-#> Getting green areas: 1.591 sec elapsed
-#> Getting roads: 0.335 sec elapsed
-#> Getting streets: 1.147 sec elapsed
-#> Getting railways: 0.253 sec elapsed
-#> Getting water bodies: 10.601 sec elapsed
+#> Getting urban areas: 0.741 sec elapsed
+#> Getting buildings: 8.504 sec elapsed
+#> Getting green areas: 0.549 sec elapsed
+#> Getting roads: 0.344 sec elapsed
+#> Getting streets: 1.228 sec elapsed
+#> Getting railways: 0.348 sec elapsed
+#> Getting water bodies: 1.204 sec elapsed
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
@@ -57,14 +56,13 @@ Several themes are available to map the layers (“light”, “dark” and
 “grey”).
 
 ``` r
-m = mapsf::mf_get_mtq()[33, ]
-lmv = om_get(x = m, quiet = TRUE)
-om_map(x = lmv, title = "Le Morne-Vert, Martinique", theme = "grey")
+om_map(x = castries, title = "Castries, Saint Lucia", theme = "grey")
 ```
 
 ![](man/figures/README-example2-1.png)<!-- -->
 
-You can also use your prefered library to map the layers.
+You can also use an sf object to extract the layers and your prefered
+library to map the layers.
 
 ``` r
 library(mapsf)

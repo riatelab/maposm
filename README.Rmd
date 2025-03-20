@@ -12,15 +12,12 @@ knitr::opts_chunk$set(
 
 # maposm <img src="man/figures/logo.png" align="right" width="140"/>
 
-`maposm` is an R package whose main purpose is to download and assemble multiple 
-geographic layers from the OpenStreetMap database for mapping purposes.
+The [OpenStreetMap](https://www.openstreetmap.org/) database provides numerous and very detailed geographic layers on a global scale. 
+To obtain synthetic information that can be used for cartographic purposes, layers must be selected, simplified, merged, or modified.  
+The `maposm` package provides a set of composite layers that are built from extractions performed with the [`osmdata`](https://docs.ropensci.org/osmdata/) package (which itself uses the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API)). 
 
-OpenStreetMap data is downloaded using the [`osmdata`](https://docs.ropensci.org/osmdata/) package,
-which in turn uses the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API). 
+The resulting layers are:
 
-The downloaded data is then merged and simplified.
-
- The layers created are:  
 - Urban areas
 - Buildings
 - Green spaces
@@ -29,15 +26,14 @@ The downloaded data is then merged and simplified.
 - Railroads 
 - Water bodies
 
-
-
-
 ## Installation
+
 You can install `maposm` from the r-universe.
 
 ```{r, eval=FALSE}
 install.packages("maposm", repos = "https://riatelab.r-universe.dev")
 ```
+
 
 ## Demo
 
@@ -53,12 +49,11 @@ om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 Several themes are available to map the layers ("light", "dark" and "grey").
 
 ```{r example2, fig.width=7, fig.height=7}
-m = mapsf::mf_get_mtq()[33, ]
-lmv = om_get(x = m, quiet = TRUE)
-om_map(x = lmv, title = "Le Morne-Vert, Martinique", theme = "grey")
+om_map(x = castries, title = "Castries, Saint Lucia", theme = "grey")
 ```
 
-You can also use your prefered  library to map the layers.   
+You can also use an sf object to extract the layers 
+and your prefered library to map the layers.   
 ```{r example3, fig.width=7, fig.height=7}
 library(mapsf)
 roseau = st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
@@ -80,7 +75,6 @@ mf_map(roseau$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
 mf_credits(txt = "\ua9 OpenStreetMap contributors")
 mf_scale(size = 100, scale_units = "m")
 mf_title("Roseau, Dominique")
-
 ```
 
 
@@ -93,5 +87,9 @@ om_write(x = roseau, filename = "roseau.gpkg")
 # import
 om_read(x = "roseau.gpkg")
 ```
+
+
+
+
 
 
