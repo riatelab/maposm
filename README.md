@@ -1,6 +1,9 @@
 
 # maposm <img src="man/figures/logo.png" align="right" width="140"/>
 
+[![maposm status
+badge](https://riatelab.r-universe.dev/maposm/badges/version)](https://riatelab.r-universe.dev/maposm)
+
 The [OpenStreetMap](https://www.openstreetmap.org/) database provides
 numerous and very detailed geographic layers on a global scale. To
 obtain synthetic information that can be used for cartographic purposes,
@@ -40,13 +43,13 @@ library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
 castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 0.741 sec elapsed
-#> Getting buildings: 8.504 sec elapsed
-#> Getting green areas: 0.549 sec elapsed
-#> Getting roads: 0.344 sec elapsed
-#> Getting streets: 1.228 sec elapsed
-#> Getting railways: 0.348 sec elapsed
-#> Getting water bodies: 1.204 sec elapsed
+#> Getting urban areas: 0.752 sec elapsed
+#> Getting buildings: 8.164 sec elapsed
+#> Getting green areas: 0.602 sec elapsed
+#> Getting roads: 0.266 sec elapsed
+#> Getting streets: 1.21 sec elapsed
+#> Getting railways: 0.919 sec elapsed
+#> Getting water bodies: 1.397 sec elapsed
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 

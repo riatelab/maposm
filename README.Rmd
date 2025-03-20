@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
 
 # maposm <img src="man/figures/logo.png" align="right" width="140"/>
 
+[![maposm status badge](https://riatelab.r-universe.dev/maposm/badges/version)](https://riatelab.r-universe.dev/maposm)
+
 The [OpenStreetMap](https://www.openstreetmap.org/) database provides numerous and very detailed geographic layers on a global scale. 
 To obtain synthetic information that can be used for cartographic purposes, layers must be selected, simplified, merged, or modified.  
 The `maposm` package provides a set of composite layers that are built from extractions performed with the [`osmdata`](https://docs.ropensci.org/osmdata/) package (which itself uses the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API)). 
