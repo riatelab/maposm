@@ -21,6 +21,14 @@
       "@id": "https://orcid.org/0000-0002-1932-3323"
     }
   ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Matthieu",
+      "familyName": "Viry",
+      "@id": "https://orcid.org/0000-0002-0693-8556"
+    }
+  ],
   "maintainer": [
     {
       "@type": "Person",
@@ -109,5 +117,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4374.206KB"
+  "fileSize": "4571.932KB"
 }
