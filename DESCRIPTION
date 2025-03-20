@@ -9,7 +9,7 @@ Authors@R: c(person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr",
 Description: Download and assemble multiple geographic layers from the OpenStreetMap database for mapping purposes.
 License: GPL-3
 Depends: 
-    R (>= 3.6.0)
+    R (>= 4.1.0)
 Imports: 
     sf,
     lwgeom,
