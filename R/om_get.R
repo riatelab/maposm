@@ -81,7 +81,6 @@ om_get = function(x, r = 1000, quiet = FALSE){
     get_line(crop = zone, return = "line")
   toc(quiet = quiet)
 
-
   tic("Getting water bodies")
   water1 = get_data(kv_water, my_opq) |>
     get_poly(crop = zone, buffer = c(5, -5))
@@ -91,7 +90,7 @@ om_get = function(x, r = 1000, quiet = FALSE){
     osmdata_sf() |>
     get_line(crop = st_buffer(zone, 10), return = "line")
   if (!is.null(water3)) {
-    xx = st_split(zone, st_geometry(water3)) |>
+    xx = suppressPackageStartupMessages(st_split(zone, st_geometry(water3))) |>
       st_collection_extract("POLYGON")
     r = get_line(x = street_raw, crop = zone, return = "line")
     water3 = st_union(xx[!(st_intersects(xx, r, sparse = FALSE)), ])
