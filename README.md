@@ -43,14 +43,13 @@ library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
 castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 1.344 sec elapsed
-#> Getting buildings: 13.123 sec elapsed
-#> Getting green areas: 0.683 sec elapsed
-#> Getting roads: 0.43 sec elapsed
-#> Getting streets: 1.528 sec elapsed
-#> Getting railways: 0.315 sec elapsed
-#> Linking to GEOS 3.13.1, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE
-#> Getting water bodies: 1.079 sec elapsed
+#> Getting urban areas: 1.187 sec elapsed
+#> Getting buildings: 7.659 sec elapsed
+#> Getting green areas: 0.715 sec elapsed
+#> Getting roads: 0.306 sec elapsed
+#> Getting streets: 1.013 sec elapsed
+#> Getting railways: 0.331 sec elapsed
+#> Getting water bodies: 7.734 sec elapsed
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
@@ -105,4 +104,24 @@ om_read(x = "roseau.gpkg")
 
 ## Alternatives
 
-- [osmplotr](https://docs.ropensci.org/osmplotr/)
+- [`osmdata`](https://github.com/ropensci/osmdata) to access to OSM data
+  through the overpass API
+- [`osmplotr`](https://docs.ropensci.org/osmplotr/) from the author of
+  `osmdata`
+- [`osmextract`](https://docs.ropensci.org/osmextract/) for large
+  extracts from OSM
+- [`prettymap`](https://github.com/marceloprates/prettymaps) is a full
+  featured Python library
+- [`mapBliss`](https://github.com/benyamindsmith/mapBliss) to plot
+  flight paths and road trips on OSM map
+- [`maptiles`](https://github.com/riatelab/maptiles) to download
+  (raster) OSM map tiles
+
+## Community Guidelines
+
+One can contribute to the package through [pull
+requests](https://github.com/riatelab/maposm/pulls) and report issues or
+ask questions [here](https://github.com/riatelab/maposm/issues). This
+project uses [conventional
+commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) and
+[semantic versioning](https://semver.org/).

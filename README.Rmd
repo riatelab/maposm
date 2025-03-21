@@ -93,7 +93,20 @@ om_read(x = "roseau.gpkg")
 
 ## Alternatives
 
-- [osmplotr](https://docs.ropensci.org/osmplotr/)
+- [`osmdata`](https://github.com/ropensci/osmdata) to access to OSM data through the overpass API
+- [`osmplotr`](https://docs.ropensci.org/osmplotr/) from the author of `osmdata`
+- [`osmextract`](https://docs.ropensci.org/osmextract/) for large extracts from OSM 
+- [`prettymap`](https://github.com/marceloprates/prettymaps) is a full featured Python library
+- [`mapBliss`](https://github.com/benyamindsmith/mapBliss) to plot flight paths and road trips on OSM map
+- [`maptiles`](https://github.com/riatelab/maptiles) to download (raster) OSM map tiles
 
 
+## Community Guidelines
+
+One can contribute to the package through [pull
+requests](https://github.com/riatelab/maposm/pulls) and report issues or
+ask questions [here](https://github.com/riatelab/maposm/issues).
+This project uses [conventional
+commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) and
+[semantic versioning](https://semver.org/).
 
