@@ -11,7 +11,7 @@ om_map(x, title = "Data from OpenStreetMap", theme = "light")
 
 \item{title}{map title}
 
-\item{theme}{cartographic theme; "light", "dark" or "grey"}
+\item{theme}{cartographic theme; "light", "dark", "grey" or "pizza"}
 }
 \value{
 Nothing is returned. A map is displayed.
