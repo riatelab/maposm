@@ -3,7 +3,7 @@
 #' Display a map of the downloaded layers.
 #' @param x a list of map layers
 #' @param title map title
-#' @param theme cartographic theme; "light", "dark" or "grey"
+#' @param theme cartographic theme; "light", "dark", "grey" or "pizza"
 #'
 #' @returns Nothing is returned. A map is displayed.
 #' @importFrom mapsf mf_map mf_credits mf_scale mf_title
@@ -28,7 +28,7 @@ om_map = function(x, title = "Data from OpenStreetMap",
   mf_map(x$road,     col = theme$road,        border = theme$road,        lwd = .5, add = TRUE)
   mf_map(x$street,   col = theme$street,      border = theme$street,      lwd = .5, add = TRUE)
   mf_map(x$building, col = theme$building[1], border = theme$building[2], lwd = .5, add = TRUE)
-  mf_map(x$zone,     col = NA,                border = theme$zone[2],     lwd = 4,  add = TRUE)
+  mf_map(x$zone,     col = NA,                border = theme$zone[2],     lwd = if (is.null(theme$size)) 4 else theme$size,  add = TRUE)
   mf_credits(txt = "\ua9 OpenStreetMap contributors", cex = .8 )
 
   if((diff(par("usr")[1:2]) / 10) < 1000){
@@ -70,5 +70,16 @@ themes = list(
     road     = "#ffffff",
     street   = "#ffffff",
     building = c("#aaaaaa", "#555555")
-  )
+  ),
+  pizza = list(
+    zone     = c("#a83c0a33", "#d7b578"),
+    urban    = "#a83c0a",
+    green    = "#569128",
+    water    = "#aad3df",
+    railway  = "white",
+    road     = "grey80",
+    street   = "grey80",
+    building = c("#942222", "#761B1B"),
+    size     = 15
+    )
 )

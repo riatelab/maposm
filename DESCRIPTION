@@ -5,7 +5,9 @@ Version: 0.1.0
 Authors@R: c(person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr",
     role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323")),
     person("Matthieu", "Viry", role = c("ctb"),
-    comment = c(ORCID = "0000-0002-0693-8556")))
+    comment = c(ORCID = "0000-0002-0693-8556")),
+    person("Louis", "Laurian", role = c("ctb"),
+    comment = c(ORCID = "0009-0002-7275-5536")))
 Description: Download and assemble multiple geographic layers from the OpenStreetMap database for mapping purposes.
 License: GPL-3
 Depends: 
