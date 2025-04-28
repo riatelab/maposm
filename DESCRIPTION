@@ -1,7 +1,7 @@
 Package: maposm
 Type: Package
 Title: Get Map Layers from OpenStreetMap
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr",
     role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323")),
     person("Matthieu", "Viry", role = c("ctb"),
