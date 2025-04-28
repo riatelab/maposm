@@ -25,6 +25,8 @@ A list of map layers is returned :
 \item \emph{street}, secondary roads;
 \item \emph{railway}, railroads (line);
 \item \emph{water}, water bodies
+If input (\code{x}) uses an unprojected CRS (lon/lat, EPSG:4326), ouput uses
+Web Mercator CRS (EPSG:3857), it uses \code{x} CRS otherwise.
 }
 }
 \description{

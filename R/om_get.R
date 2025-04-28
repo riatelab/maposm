@@ -16,7 +16,8 @@
 #' - *street*, secondary roads;
 #' - *railway*, railroads (line);
 #' - *water*, water bodies
-#'
+#' If input (`x`) uses an unprojected CRS (lon/lat, EPSG:4326), ouput uses
+#' Web Mercator CRS (EPSG:3857), it uses `x` CRS otherwise.
 #' @md
 #' @export
 #'

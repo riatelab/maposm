@@ -28,7 +28,7 @@ om_map = function(x, title = "Data from OpenStreetMap",
   mf_map(x$road,     col = theme$road,        border = theme$road,        lwd = .5, add = TRUE)
   mf_map(x$street,   col = theme$street,      border = theme$street,      lwd = .5, add = TRUE)
   mf_map(x$building, col = theme$building[1], border = theme$building[2], lwd = .5, add = TRUE)
-  mf_map(x$zone,     col = NA,                border = theme$zone[2],     lwd = if (is.null(theme$size)) 4 else theme$size,  add = TRUE)
+  mf_map(x$zone,     col = NA,                border = theme$zone[2],     lwd = ifelse(is.null(theme$size), 4, theme$size),  add = TRUE)
   mf_credits(txt = "\ua9 OpenStreetMap contributors", cex = .8 )
 
   if((diff(par("usr")[1:2]) / 10) < 1000){

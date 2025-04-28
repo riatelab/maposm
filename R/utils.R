@@ -110,9 +110,9 @@ empty_sf = function(x, zone, type){
 }
 
 
-
+#' @importFrom sf st_is_longlat
 zone_input = function(x, r){
-  prj = "EPSG:3857"
+  out_prj = "EPSG:3857"
   if (inherits(x = x, what = c("sfc", "sf"))) {
     lx = length(st_geometry(x))
     if (lx != 1) {
@@ -120,12 +120,17 @@ zone_input = function(x, r){
     }
     type = sf::st_geometry_type(x, by_geometry = TRUE)
     if (type == "POINT") {
-      prj = st_crs(x)
+      if (!st_is_longlat(x)) {
+        out_prj = st_crs(x)
+      }
       x = st_transform(x, "EPSG:4326")
       x = c(st_coordinates(x)[1], st_coordinates(x)[2])
     } else if (!type %in% c("POLYGON", "MULTIPOLYGON")){
       stop("x must be a POINT or (MULTI)POLYGON.", call. = FALSE)
     } else {
+      if (st_is_longlat(x)) {
+        x = st_transform(x, "EPSG:3857")
+      }
       return(x)
     }
   }
@@ -142,7 +147,7 @@ zone_input = function(x, r){
     }
     zone = data.frame(x = x[1], y = x[2]) |>
       st_as_sf(coords = c("x", "y"), crs = "EPSG:4326") |>
-      st_transform(prj) |>
+      st_transform(out_prj) |>
       st_buffer(dist = r)
     return(zone)
   } else {
