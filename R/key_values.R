@@ -23,6 +23,6 @@ kv_road = list("highway" = c("motorway", "motorway_link", "trunk", "trunk_link",
                              "secondary_link"))
 
 kv_street = list("highway" = c("tertiary", "tertiary_link", "unclassified",
-                               "residential", "living_street","pedestrian"))
+                               "residential", "living_street","pedestrian", "service"))
 
 kv_railway = list("railway" = "rail")
