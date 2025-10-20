@@ -10,7 +10,7 @@
 #' A list of map layers is returned :
 #' - *zone*, the extraction zone;
 #' - *urban*, urban areas;
-#' - *building*, buildings (if the extraction zone area is below 15 km^2);
+#' - *building*, buildings (if the extraction zone area is below 20 km²);
 #' - *green*, green spaces;
 #' - *road*, main roads;
 #' - *street*, secondary roads;
@@ -46,15 +46,12 @@ om_get = function(x, r = 1000, quiet = FALSE){
     get_poly(crop = zone, buffer = c(2, -2))
   toc(quiet = quiet)
 
-  if (as.numeric(st_area(zone)) < 15000000 ) {
-    tic("Getting buildings")
+  tic("Getting buildings")
+  if (as.numeric(st_area(zone)) < 20000000 ) {
     building = get_data(kv_building, my_opq) |>
       get_poly(crop = zone, buffer = c(2, -2))
   } else {
     building = NULL
-    if(quiet == TRUE){
-      message("The requested area is too large for downloading buildings.")
-    }
   }
   toc(quiet = quiet)
 

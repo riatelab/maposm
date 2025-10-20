@@ -19,7 +19,7 @@ A list of map layers is returned :
 \itemize{
 \item \emph{zone}, the extraction zone;
 \item \emph{urban}, urban areas;
-\item \emph{building}, buildings (if the extraction zone area is below 15 km^2);
+\item \emph{building}, buildings (if the extraction zone area is below 20 km²);
 \item \emph{green}, green spaces;
 \item \emph{road}, main roads;
 \item \emph{street}, secondary roads;
