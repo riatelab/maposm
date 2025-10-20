@@ -66,7 +66,8 @@ get_line = function(x, crop, buffer, return = "polygon") {
       st_intersection(crop) |>
       st_union()
     if (return == "polygon") {
-      z = st_buffer(z, buffer[1]) |> st_buffer(buffer[2])
+      z = st_buffer(z, buffer[1], nQuadSegs = 1) |>
+        st_buffer(buffer[2], nQuadSegs = 1)
     }
     z = st_sf(geometry = z)
   }
