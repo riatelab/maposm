@@ -39,7 +39,7 @@ om_get = function(x, r = 1000, quiet = FALSE){
   bbox = st_buffer(zone, r / 10) |>
     st_transform("EPSG:4326") |>
     st_bbox()
-  my_opq = opq(bbox = bbox)
+  my_opq = opq(bbox = bbox,  timeout = 90, memsize = 104857600)
 
   tic("Getting urban areas")
   urban = get_data(kv_urban, my_opq) |>
