@@ -43,20 +43,20 @@ library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
 castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 1.187 sec elapsed
-#> Getting buildings: 7.659 sec elapsed
-#> Getting green areas: 0.715 sec elapsed
-#> Getting roads: 0.306 sec elapsed
-#> Getting streets: 1.013 sec elapsed
-#> Getting railways: 0.331 sec elapsed
-#> Getting water bodies: 7.734 sec elapsed
+#> Getting urban areas: 0.878 sec elapsed
+#> Getting buildings: 6.82 sec elapsed
+#> Getting green areas: 1.393 sec elapsed
+#> Getting roads: 0.557 sec elapsed
+#> Getting streets: 0.732 sec elapsed
+#> Getting railways: 0.459 sec elapsed
+#> Getting water bodies: 11.854 sec elapsed
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
 
-Several themes are available to map the layers (“light”, “dark” and
-“grey”).
+Several themes are available to map the layers (“light”, “dark”, “grey”
+and “pizza”).
 
 ``` r
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "grey")

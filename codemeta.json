@@ -5,13 +5,13 @@
   "description": "Download and assemble multiple geographic layers from the OpenStreetMap database for mapping purposes.",
   "name": "maposm: Get Map Layers from OpenStreetMap",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.3 (2025-02-28)",
+  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
   "author": [
     {
       "@type": "Person",
@@ -27,6 +27,12 @@
       "givenName": "Matthieu",
       "familyName": "Viry",
       "@id": "https://orcid.org/0000-0002-0693-8556"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Louis",
+      "familyName": "Laurian",
+      "@id": "https://orcid.org/0009-0002-7275-5536"
     }
   ],
   "maintainer": [
@@ -43,7 +49,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.6.0"
+      "version": ">= 4.1.0"
     },
     "2": {
       "@type": "SoftwareApplication",
@@ -117,5 +123,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4571.932KB"
+  "fileSize": "2193.843KB"
 }

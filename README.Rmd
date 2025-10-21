@@ -48,7 +48,7 @@ castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
 ```
 
-Several themes are available to map the layers ("light", "dark" and "grey").
+Several themes are available to map the layers ("light", "dark", "grey" and "pizza").
 
 ```{r example2, fig.width=7, fig.height=7}
 om_map(x = castries, title = "Castries, Saint Lucia", theme = "grey")

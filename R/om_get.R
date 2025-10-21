@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @importFrom sf st_as_sf st_bbox st_buffer st_geometry st_transform st_area
-#' st_intersects
+#' st_intersects st_agr<- st_length
 #' @importFrom lwgeom st_split
 #' @importFrom osmdata opq
 #' @importFrom tictoc tic toc
@@ -90,12 +90,12 @@ om_get = function(x, r = 1000, quiet = FALSE){
   if (!is.null(water3)) {
     xx = suppressPackageStartupMessages(st_split(zone, st_geometry(water3))) |>
       st_collection_extract("POLYGON")
-    xx$ID <- 1:nrow(xx)
+    xx$ID = 1:nrow(xx)
     s = get_line(x = street_raw, crop = zone, return = "line")
-    st_agr(xx) <- "constant"
-    street_water <- st_intersection(s, xx)
-    street_water$l <- st_length(street_water)
-    water3 = xx[!xx$ID %in% street_water$ID[as.numeric(street_water$l)>200],] |>
+    st_agr(xx) = "constant"
+    s_w = st_intersection(s, xx)
+    s_w$l = st_length(s_w)
+    water3 = xx[!xx$ID %in% s_w$ID[as.numeric(s_w$l) > 200],] |>
       st_geometry() |>
       st_union()
   }
