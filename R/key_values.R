@@ -20,9 +20,11 @@ kv_urban = list("landuse" = c("commercial", "residential", "industrial",
 
 kv_road = list("highway" = c("motorway", "motorway_link", "trunk", "trunk_link",
                              "primary",    "primary_link", "secondary",
-                             "secondary_link"))
+                             "secondary_link"),
+               "aeroway" = c("runway"))
 
 kv_street = list("highway" = c("tertiary", "tertiary_link", "unclassified",
-                               "residential", "living_street","pedestrian", "service"))
+                               "residential", "living_street","pedestrian", "service"),
+                 "aeroway" = c("taxiway"))
 
 kv_railway = list("railway" = "rail")
