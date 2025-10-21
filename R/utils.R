@@ -35,8 +35,8 @@ get_poly = function(x, crop, buffer) {
       # st_cast("POLYGON") |>
       st_intersection(crop) |>
       st_union() |>
-      st_buffer(buffer[1]) |>
-      st_buffer(buffer[2])
+      st_buffer(buffer[1], nQuadSegs = 2) |>
+      st_buffer(buffer[2], nQuadSegs = 2)
     z = st_sf(geometry = z)
   }
   if (nrow(z) == 0) {
