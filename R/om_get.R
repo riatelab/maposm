@@ -90,8 +90,14 @@ om_get = function(x, r = 1000, quiet = FALSE){
   if (!is.null(water3)) {
     xx = suppressPackageStartupMessages(st_split(zone, st_geometry(water3))) |>
       st_collection_extract("POLYGON")
-    r = get_line(x = street_raw, crop = zone, return = "line")
-    water3 = st_union(xx[!(st_intersects(xx, r, sparse = FALSE)), ])
+    xx$ID <- 1:nrow(xx)
+    s = get_line(x = street_raw, crop = zone, return = "line")
+    st_agr(xx) <- "constant"
+    street_water <- st_intersection(s, xx)
+    street_water$l <- st_length(street_water)
+    water3 = xx[!xx$ID %in% street_water$ID[as.numeric(street_water$l)>200],] |>
+      st_geometry() |>
+      st_union()
   }
   water = unify(water1, water2)
   water = unify(water, water3)
