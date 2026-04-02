@@ -116,6 +116,8 @@ om_read(x = "roseau.gpkg")
   flight paths and road trips on OSM map
 - [`maptiles`](https://github.com/riatelab/maptiles) to download
   (raster) OSM map tiles
+- [`cartographr`](https://github.com/da-wi/cartographr) to plot OSM layers using `ggplot2`
+- [`rcityviews`](https://github.com/koenderks/rcityviews) Map a selection of cities + R shiny interface
 
 ## Community Guidelines
 

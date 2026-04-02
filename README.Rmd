@@ -99,6 +99,8 @@ om_read(x = "roseau.gpkg")
 - [`prettymap`](https://github.com/marceloprates/prettymaps) is a full featured Python library
 - [`mapBliss`](https://github.com/benyamindsmith/mapBliss) to plot flight paths and road trips on OSM map
 - [`maptiles`](https://github.com/riatelab/maptiles) to download (raster) OSM map tiles
+- [`cartographr`](https://github.com/da-wi/cartographr) to plot OSM layers using `ggplot2`
+- [`rcityviews`](https://github.com/koenderks/rcityviews) Map a selection of cities + R shiny interface
 
 
 ## Community Guidelines
