@@ -29,7 +29,7 @@ The resulting layers are:
 You can install `maposm` from the r-universe.
 
 ``` r
-install.packages("maposm", repos = "https://riatelab.r-universe.dev")
+install.packages('maposm', repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ## Demo
