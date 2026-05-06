@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @importFrom sf st_as_sf st_bbox st_buffer st_geometry st_transform st_area
-#' st_intersects st_agr<- st_length
+#' @importFrom sf st_intersects st_agr<- st_length
 #' @importFrom lwgeom st_split
 #' @importFrom osmdata opq
 #' @importFrom tictoc tic toc

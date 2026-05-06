@@ -1,5 +1,5 @@
 #' @importFrom osmdata add_osm_features add_osm_feature osmdata_sf
-#' unique_osmdata
+#' @importFrom osmdata unique_osmdata
 get_data = function(x, opq){
   if (is.list(x)) {
     add_osm_features(opq = opq, features = x) |>
@@ -13,7 +13,7 @@ get_data = function(x, opq){
 }
 
 #' @importFrom sf st_geometry st_sfc st_collection_extract st_transform st_crs
-#' st_make_valid st_intersection st_union st_buffer st_sf
+#' @importFrom sf st_make_valid st_intersection st_union st_buffer st_sf
 get_poly = function(x, crop, buffer) {
   if (!is.null(x$osm_polygons) && nrow(x$osm_polygons) > 0) {
     a = st_geometry(x$osm_polygons)
@@ -94,7 +94,7 @@ unify = function(x, y){
 }
 
 #' @importFrom sf st_coordinates st_geometry<- st_linestring
-#' st_point st_polygon
+#' @importFrom sf st_point st_polygon
 empty_sf = function(x, zone, type){
   if (type == "POINT"){
     x = st_sf(geom = st_sfc(st_point()), crs = st_crs(zone))
