@@ -1,16 +1,20 @@
-# --------------------------------------------
-# CITATION file created with {cffr} R package
+# ------------------------------------------------
+# CITATION.cff file created with {cffr} R package
 # See also: https://docs.ropensci.org/cffr/
-# --------------------------------------------
+# ------------------------------------------------
  
 cff-version: 1.2.0
 message: 'To cite package "maposm" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'maposm: Get Map Layers from OpenStreetMap'
-version: 0.2.0
-abstract: Download and assemble multiple geographic layers from the OpenStreetMap
-  database for mapping purposes.
+version: 0.3.0
+abstract: The 'OpenStreetMap' database provides a wide range of highly detailed geographic
+  layers on a global scale. To obtain synthetic information for cartographic purposes,
+  layers must be selected, simplified, merged, or modified. 'maposm' downloads OpenStreetMap
+  extracts and performs these operations to create a set of composite layers of urban
+  areas, buildings, green spaces, main roads, secondary roads, railways, and water
+  bodies.
 authors:
 - family-names: Giraud
   given-names: Timothée
@@ -28,11 +32,14 @@ references:
   url: https://www.R-project.org/
   authors:
   - name: R Core Team
+    website: https://ror.org/02zz1nj61
   institution:
     name: R Foundation for Statistical Computing
+    website: https://ror.org/05qewa988
     address: Vienna, Austria
-  year: '2025'
-  version: '>= 4.1.0'
+  year: '2026'
+  doi: 10.32614/R.manuals
+  version: '>= 4.2.0'
 - type: software
   title: sf
   abstract: 'sf: Simple Features for R'
@@ -44,7 +51,7 @@ references:
     given-names: Edzer
     email: edzer.pebesma@uni-muenster.de
     orcid: https://orcid.org/0000-0001-8049-7069
-  year: '2025'
+  year: '2026'
   doi: 10.32614/CRAN.package.sf
 - type: software
   title: lwgeom
@@ -57,30 +64,21 @@ references:
     given-names: Edzer
     email: edzer.pebesma@uni-muenster.de
     orcid: https://orcid.org/0000-0001-8049-7069
-  year: '2025'
+  year: '2026'
   doi: 10.32614/CRAN.package.lwgeom
-- type: software
-  title: tictoc
-  abstract: 'tictoc: Functions for Timing R Scripts, as Well as Implementations of
-    "Stack" and "StackList" Structures'
-  notes: Imports
-  url: https://github.com/jabiru/tictoc
-  repository: https://CRAN.R-project.org/package=tictoc
-  authors:
-  - family-names: Izrailev
-    given-names: Sergei
-  year: '2025'
-  doi: 10.32614/CRAN.package.tictoc
 - type: software
   title: tools
   abstract: 'R: A Language and Environment for Statistical Computing'
   notes: Imports
   authors:
   - name: R Core Team
+    website: https://ror.org/02zz1nj61
   institution:
     name: R Foundation for Statistical Computing
+    website: https://ror.org/05qewa988
     address: Vienna, Austria
-  year: '2025'
+  year: '2026'
+  doi: 10.32614/R.manuals
 - type: software
   title: mapsf
   abstract: 'mapsf: Thematic Cartography'
@@ -92,7 +90,7 @@ references:
     given-names: Timothée
     email: timothee.giraud@cnrs.fr
     orcid: https://orcid.org/0000-0002-1932-3323
-  year: '2025'
+  year: '2026'
   doi: 10.32614/CRAN.package.mapsf
 - type: software
   title: graphics
@@ -100,31 +98,27 @@ references:
   notes: Imports
   authors:
   - name: R Core Team
+    website: https://ror.org/02zz1nj61
   institution:
     name: R Foundation for Statistical Computing
+    website: https://ror.org/05qewa988
     address: Vienna, Austria
-  year: '2025'
+  year: '2026'
+  doi: 10.32614/R.manuals
 - type: software
-  title: osmdata
-  abstract: 'osmdata: Import ''OpenStreetMap'' Data as Simple Features or Spatial
-    Objects'
+  title: osmextract
+  abstract: 'osmextract: Download and Import Open Street Map Data Extracts'
   notes: Imports
-  url: https://docs.ropensci.org/osmdata/
-  repository: https://CRAN.R-project.org/package=osmdata
+  url: https://docs.ropensci.org/osmextract/
+  repository: https://CRAN.R-project.org/package=osmextract
   authors:
-  - family-names: Maspons
-    given-names: Joan
-    email: joanmaspons@gmail.com
-    orcid: https://orcid.org/0000-0003-2286-8727
-  - family-names: Padgham
-    given-names: Mark
-    email: mark.padgham@email.com
-  - family-names: Rudis
-    given-names: Bob
+  - family-names: Gilardi
+    given-names: Andrea
+    email: andrea.gilardi@unimib.it
+    orcid: https://orcid.org/0000-0002-9424-7439
   - family-names: Lovelace
     given-names: Robin
-  - family-names: Salmon
-    given-names: Maëlle
-  year: '2025'
-  doi: 10.32614/CRAN.package.osmdata
+    orcid: https://orcid.org/0000-0001-5679-6536
+  year: '2026'
+  doi: 10.32614/CRAN.package.osmextract
 
