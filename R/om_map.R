@@ -11,10 +11,8 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' r = om_get(c(1.453587,43.611408), 700)
-#' om_map(r, "Matabiau neighbourhood", "light")
-#'}
+#' res = om_get(c(-61.070, 14.605), r = 600)
+#' om_map(res, title = "Fort-de-France town centre", theme = "light")
 om_map = function(x, title = "Data from OpenStreetMap",
                   theme = "light"){
 

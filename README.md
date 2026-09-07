@@ -4,53 +4,48 @@
 [![maposm status
 badge](https://riatelab.r-universe.dev/maposm/badges/version)](https://riatelab.r-universe.dev/maposm)
 
-The [OpenStreetMap](https://www.openstreetmap.org/) database provides
-numerous and very detailed geographic layers on a global scale. To
-obtain synthetic information that can be used for cartographic purposes,
-layers must be selected, simplified, merged, or modified.  
-The `maposm` package provides a set of composite layers that are built
-from extractions performed with the
-[`osmdata`](https://docs.ropensci.org/osmdata/) package (which itself
-uses the [Overpass
-API](https://wiki.openstreetmap.org/wiki/Overpass_API)).
-
-The resulting layers are:
-
-- Urban areas
-- Buildings
-- Green spaces
-- Main roads
-- Secondary roads
-- Railroads
-- Water bodies
+The [OpenStreetMap](https://www.openstreetmap.org/) database provides a
+wide range of highly detailed geographic layers on a global scale. To
+obtain synthetic information for cartographic purposes, layers must be
+selected, simplified, merged, or modified.  
+`maposm` downloads OpenStreetMap extracts and performs these operations
+to create a set of composite layers of urban areas, buildings, green
+spaces, main roads, secondary roads, railways, and water bodies.
 
 ## Installation
 
 You can install `maposm` from the r-universe.
 
 ``` r
-install.packages('maposm', repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))
+install.packages("maposm", repos = "https://riatelab.r-universe.dev")
 ```
 
 ## Demo
 
 `om_get()` is used to download, merge and simplify the geographic
 layers.  
-`om_map()` can be used to map the layers.
+`om_map()` is used to map the layers.
 
 ``` r
 library(maposm)
 #> Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 #> Maps based on OpenStreetMap data should cite "© OpenStreetMap contributors" as the data source.
-castries = om_get(x = c(-60.9903, 14.0096), r = 2000)
-#> Getting urban areas: 0.878 sec elapsed
-#> Getting buildings: 6.82 sec elapsed
-#> Getting green areas: 1.393 sec elapsed
-#> Getting roads: 0.557 sec elapsed
-#> Getting streets: 0.732 sec elapsed
-#> Getting railways: 0.459 sec elapsed
-#> Getting water bodies: 11.854 sec elapsed
-om_map(x = castries, title = "Castries, Saint Lucia", theme = "light")
+f2f = om_get(x = c(-61.070, 14.605), r = 600)
+#> # Download the OpenStreetMap file
+#> The input place and the radius matched the sample dataset.
+#> Skip downloading and data extraction.
+#> 
+#> # Compose layers
+#> - green spaces
+#> - buildings
+#> - urban areas
+#> - roads
+#> - streets
+#> - railways
+#> - water bodies
+#> 
+#> Done!
+om_map(x = f2f, title = "Fort-de-France, Martinique", theme = "light")
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
@@ -59,35 +54,27 @@ Several themes are available to map the layers (“light”, “dark”, “grey
 and “pizza”).
 
 ``` r
-om_map(x = castries, title = "Castries, Saint Lucia", theme = "grey")
+om_map(x = f2f, title = "Fort-de-France, Martinique", theme = "grey")
 ```
 
 ![](man/figures/README-example2-1.png)<!-- -->
 
-You can also use an sf object to extract the layers and your prefered
-library to map the layers.
+You can also use your prefered library to map the layers.
 
 ``` r
 library(mapsf)
-roseau = st_as_sf(data.frame(lat = 15.300, lon = -61.388), 
-                   coords = c("lon", "lat"), 
-                   crs = "EPSG:4326") |>
-  st_transform("EPSG:3857") |>
-  st_buffer(dist = 500, nQuadSegs = 2) |> 
-  om_get(quiet = TRUE)
-
-mf_map(roseau$zone, col = "#f2efe9", border = NA, add = FALSE)
-mf_map(roseau$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
-mf_map(roseau$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
-mf_map(roseau$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
-mf_map(roseau$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
-mf_map(roseau$road, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(roseau$street, col = "white", border = "white", lwd = .5, add = TRUE)
-mf_map(roseau$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
-mf_map(roseau$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
+mf_map(f2f$zone, col = "#f2efe9", border = NA, add = FALSE)
+mf_map(f2f$urban, col = "#e0dfdf", border = "#e0dfdf", lwd = .5, add = TRUE)
+mf_map(f2f$green, col = "#c8facc", border = "#c8facc", lwd = .5, add = TRUE)
+mf_map(f2f$water, col = "#aad3df", border = "#aad3df", lwd = .5, add = TRUE)
+mf_map(f2f$railway, col = "grey50", lty = 2, lwd = .2, add = TRUE)
+mf_map(f2f$street, col = "white", border = "white", lwd = .5, add = TRUE)
+mf_map(f2f$road, col = "#f7fabf", border = "#f7fabf", lwd = .5, add = TRUE)
+mf_map(f2f$building, col = "#d9d0c9", border = "#c6bab1", lwd = .5, add = TRUE)
+mf_map(f2f$zone, col = NA, border = "#c6bab1", lwd = 4, add = TRUE)
 mf_credits(txt = "\ua9 OpenStreetMap contributors")
 mf_scale(size = 100, scale_units = "m")
-mf_title("Roseau, Dominique")
+mf_title("Fort-de-France, Martinique")
 ```
 
 ![](man/figures/README-example3-1.png)<!-- -->
@@ -97,9 +84,9 @@ mf_title("Roseau, Dominique")
 
 ``` r
 # save
-om_write(x = roseau, filename = "roseau.gpkg")
+om_write(x = f2f, filename = "f2f.gpkg")
 # import
-om_read(x = "roseau.gpkg")
+om_read(x = "f2f.gpkg")
 ```
 
 ## Alternatives
@@ -116,8 +103,10 @@ om_read(x = "roseau.gpkg")
   flight paths and road trips on OSM map
 - [`maptiles`](https://github.com/riatelab/maptiles) to download
   (raster) OSM map tiles
-- [`cartographr`](https://github.com/da-wi/cartographr) to plot OSM layers using `ggplot2`
-- [`rcityviews`](https://github.com/koenderks/rcityviews) Map a selection of cities + R shiny interface
+- [`cartographr`](https://github.com/da-wi/cartographr) to plot OSM
+  layers using `ggplot2`
+- [`rcityviews`](https://github.com/koenderks/rcityviews) Map a
+  selection of cities + R shiny interface
 
 ## Community Guidelines
 

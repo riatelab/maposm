@@ -4,41 +4,55 @@
 \alias{om_get}
 \title{Get map layers}
 \usage{
-om_get(x, r = 1000, quiet = FALSE)
+om_get(
+  x,
+  r,
+  download_directory = tempdir(),
+  force_download = FALSE,
+  force_building = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{an sf or sfc object, or a couple of coordinates}
+\item{x}{an sf or sfc object, or a couple of coordinates
+(lon/lat, EPSG:4326)}
 
-\item{r}{radi of the extraction if x is an sf POINT or a couple of
+\item{r}{radius of the extraction if x is an sf POINT or a couple of
 coordinates}
 
-\item{quiet}{suppress info}
+\item{download_directory}{directory to store the file containing
+OpenStreetMap data}
+
+\item{force_download}{if TRUE, the OpenSteetMap file is updated even if it
+has already been downloaded.}
+
+\item{force_building}{force the extraction of buildings in zones larger than
+20 km²}
+
+\item{quiet}{if FALSE, the function prints informative messages}
 }
 \value{
 A list of map layers is returned :
 \itemize{
 \item \emph{zone}, the extraction zone;
 \item \emph{urban}, urban areas;
-\item \emph{building}, buildings (if the extraction zone area is below 20 km²);
+\item \emph{building}, buildings (if the extraction zone area is below 20 km² or
+\code{force_building = TRUE});
 \item \emph{green}, green spaces;
 \item \emph{road}, main roads;
 \item \emph{street}, secondary roads;
-\item \emph{railway}, railroads (line);
+\item \emph{railway}, railways (line);
 \item \emph{water}, water bodies
-If input (\code{x}) uses an unprojected CRS (lon/lat, EPSG:4326), ouput uses
-Web Mercator CRS (EPSG:3857), it uses \code{x} CRS otherwise.
 }
+
+If \code{x} uses an unprojected CRS (lon/lat, EPSG:4326), ouput uses
+Web Mercator CRS (EPSG:3857), it uses \code{x} CRS otherwise.
 }
 \description{
 Download various OpenStreetMap
 features to create map layers.
 }
 \examples{
-\dontrun{
-bb1 = osmdata::getbb("Gare Matabiau, 31000 TOULOUSE, France")
-lon = mean(bb1[1, ])
-lat = mean(bb1[2, ])
-res = om_get(c(lon, lat), r = 700)
-om_map(res)
-}
+res = om_get(c(-61.070, 14.605), r = 600)
+om_map(res, title = "Fort-de-France town centre")
 }

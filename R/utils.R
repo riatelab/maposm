@@ -1,118 +1,13 @@
-#' @importFrom osmdata add_osm_features add_osm_feature osmdata_sf
-#' @importFrom osmdata unique_osmdata
-get_data = function(x, opq){
-  if (is.list(x)) {
-    add_osm_features(opq = opq, features = x) |>
-      osmdata_sf() |>
-      unique_osmdata()
-  } else {
-    add_osm_feature(opq = opq, key = x) |>
-      osmdata_sf() |>
-      unique_osmdata()
-  }
-}
-
-#' @importFrom sf st_geometry st_sfc st_collection_extract st_transform st_crs
-#' @importFrom sf st_make_valid st_intersection st_union st_buffer st_sf
-get_poly = function(x, crop, buffer) {
-  if (!is.null(x$osm_polygons) && nrow(x$osm_polygons) > 0) {
-    a = st_geometry(x$osm_polygons)
-  } else {
-    a = NULL
-  }
-  if (!is.null(x$osm_multipolygons) && nrow(x$osm_multipolygons) > 0) {
-    b = st_geometry(x$osm_multipolygons)
-  } else {
-    b = NULL
-  }
-
-  z = st_sfc(c(a, b), crs = "EPSG:4326")
-
-  suppressWarnings({z = st_collection_extract(z, 'POLYGON',warn = FALSE)})
-  if (!is.null(z)) {
-    z = st_transform(z, st_crs(crop)) |>
-      st_make_valid() |>
-      # st_cast("POLYGON") |>
-      st_intersection(crop) |>
-      st_union() |>
-      st_buffer(buffer[1], nQuadSegs = 2) |>
-      st_buffer(buffer[2], nQuadSegs = 2)
-    z = st_sf(geometry = z)
-  }
-  if (nrow(z) == 0) {
-    z = NULL
-  }
-  return(z)
-}
-
-#' @importFrom sf st_cast
-get_line = function(x, crop, buffer, return = "polygon") {
-  if (!is.null(x$osm_lines) && nrow(x$osm_lines) > 0) {
-    a = st_geometry(x$osm_lines)
-  } else {
-    a = NULL
-  }
-  if (!is.null(x$osm_multilines) && nrow(x$osm_multilines) > 0) {
-    b = st_geometry(x$osm_multilines)
-  } else {
-    b = NULL
-  }
-  z = st_sfc(c(a, b), crs = "EPSG:4326")
-  suppressWarnings({z = st_collection_extract(z, 'LINESTRING',warn = FALSE)})
-  if (!is.null(z)) {
-    z = st_make_valid(z) |>
-      st_cast("LINESTRING") |>
-      st_transform(st_crs(crop)) |>
-      st_intersection(crop) |>
-      st_union()
-    if (return == "polygon") {
-      z = st_buffer(z, buffer[1], nQuadSegs = 1) |>
-        st_buffer(buffer[2], nQuadSegs = 1)
-    }
-    z = st_sf(geometry = z)
-  }
-
-  if (nrow(z) == 0) {
-    z = NULL
-  }
-  return(z)
-}
+#' @importFrom sf st_as_sf st_bbox st_buffer st_geometry st_transform st_area
+#'  st_intersects st_agr<- st_length st_sf st_sfc st_crs st_geometry<-
+#'  st_sf st_union st_intersection st_make_valid st_coordinates st_geometry
+#'  st_linestring st_point st_polygon st_cast st_collection_extract
+#'  st_geometry_type st_is_empty st_is_longlat
+#' @importFrom lwgeom st_split
+#' @importFrom osmextract oe_match oe_download oe_vectortranslate
 
 
-unify = function(x, y){
-  if(!is.null(x) && !is.null(y)){
-    return(st_union(x,y))
-  }
-  if(is.null(x) && is.null(y)){
-    return(NULL)
-  }
-  if(is.null(x)){
-    return(y)
-  } else {
-    return(x)
-  }
-}
-
-#' @importFrom sf st_coordinates st_geometry<- st_linestring
-#' @importFrom sf st_point st_polygon
-empty_sf = function(x, zone, type){
-  if (type == "POINT"){
-    x = st_sf(geom = st_sfc(st_point()), crs = st_crs(zone))
-  }
-  if (type == "POLYGON"){
-    x = st_sf(geom = st_sfc(st_polygon()), crs = st_crs(zone))
-  }
-  if (type == "LINE"){
-    x = st_sf(geom = st_sfc(st_linestring()), crs = st_crs(zone))
-  }
-  new_bb = st_bbox(zone)
-  attr(st_geometry(x), "bbox") = new_bb
-  x
-}
-
-
-#' @importFrom sf st_is_longlat
-zone_input = function(x, r){
+zone_input = function(x, r) {
   out_prj = "EPSG:3857"
   if (inherits(x = x, what = c("sfc", "sf"))) {
     lx = length(st_geometry(x))
@@ -126,7 +21,7 @@ zone_input = function(x, r){
       }
       x = st_transform(x, "EPSG:4326")
       x = c(st_coordinates(x)[1], st_coordinates(x)[2])
-    } else if (!type %in% c("POLYGON", "MULTIPOLYGON")){
+    } else if (!type %in% c("POLYGON", "MULTIPOLYGON")) {
       stop("x must be a POINT or (MULTI)POLYGON.", call. = FALSE)
     } else {
       if (st_is_longlat(x)) {
@@ -147,11 +42,106 @@ zone_input = function(x, r){
       )
     }
     zone = data.frame(x = x[1], y = x[2]) |>
-      st_as_sf(coords = c("x", "y"), crs = "EPSG:4326") |>
+      st_as_sf(coords = c("x", "y"), crs = "EPSG:4326", remove = FALSE) |>
       st_transform(out_prj) |>
       st_buffer(dist = r)
     return(zone)
   } else {
     stop("x should be an sf or sfc object, or a couple of coordinates.")
   }
+}
+
+skip_dl <- function(x, r){
+  if (is.vector(x) && length(x) == 2 && is.numeric(x))
+    if(x[1] == -61.07 && x[2] == 14.605 & r == 600){
+      return(TRUE)
+    }
+  return(FALSE)
+}
+
+unify = function(x, y) {
+  if (!st_is_empty(x) && !st_is_empty(y)) {
+    return(st_union(x, y))
+  }
+  if (st_is_empty(x) && st_is_empty(y)) {
+    return(x)
+  }
+  if (st_is_empty(x)) {
+    return(y)
+  } else {
+    return(x)
+  }
+}
+
+mo_download = function(place, download_directory, force_download, quiet) {
+  verbose = !quiet
+
+  if (verbose) {
+    message("# Download the OpenStreetMap file")
+  }
+  place_file = oe_match(place = place, quiet = quiet)
+  place_download = oe_download(
+    file_url = place_file$url,
+    file_size = place_file$file_size,
+    download_directory = download_directory,
+    force_download = force_download,
+    quiet = quiet
+  )
+
+  if (verbose) {
+    message("\n# Polygons extraction")
+  }
+  oe_vectortranslate(
+    place_download,
+    layer = "multipolygons",
+    extra_tags = c(
+      "landuse",
+      "amenity",
+      "leisure",
+      "natural",
+      "place",
+      "aeroway",
+      "highway",
+      "tourism",
+      "man_made"
+    ),
+    boundary = st_bbox(place),
+    quiet = quiet
+  )
+
+  if (verbose) {
+    message("\n# Lines extraction")
+  }
+  gpkg_path = oe_vectortranslate(
+    place_download,
+    layer = "lines",
+    extra_tags = c("natural", "waterway", "location", "aeroway"),
+    boundary = st_bbox(place),
+    quiet = quiet
+  )
+
+  lines = st_read(dsn = gpkg_path, layer = "lines", quiet = TRUE)
+  polygons = st_read(dsn = gpkg_path, layer = "multipolygons", quiet = TRUE)
+
+  return(list(lines = lines, polygons = polygons))
+}
+
+empty_sf = function(x, zone, type) {
+  if (missing(x)) {
+    x = data.frame(NULL)
+  }
+  if (nrow(x) == 0) {
+    if (type == "POINT") {
+      x = st_sf(geometry = st_sfc(st_point()), crs = st_crs(zone))
+    }
+    if (type == "POLYGON") {
+      x = st_sf(geometry = st_sfc(st_polygon()), crs = st_crs(zone))
+    }
+    if (type == "LINE") {
+      x = st_sf(geometry = st_sfc(st_linestring()), crs = st_crs(zone))
+    }
+    new_bb = st_bbox(zone)
+    attr(st_geometry(x), "bbox") = new_bb
+  }
+  return(x)
 }

@@ -8,12 +8,11 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' r = om_get(c(2.17, 41.39), 500)
-#' om_write(r, "bcn.gpkg")
-#' r = om_read("bcn.gpkg")
-#' om_map(r)
-#' }
+#' res = om_get(c(-61.070, 14.605), r = 600)
+#' om_map(res, title = "Fort-de-France town centre")
+#' om_write(res, file.path(tempdir(), "f2f.gpkg"))
+#' r = om_read(file.path(tempdir(), "f2f.gpkg"))
+#' om_map(r, theme = "grey")
 om_read = function(filename){
   if (tools::file_ext(filename) != "gpkg") {
     stop("'filename' must be the path to a geopackage. It must end with '.gpkg'")

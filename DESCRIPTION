@@ -1,25 +1,30 @@
 Package: maposm
 Type: Package
 Title: Get Map Layers from OpenStreetMap
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(person("Timothée", "Giraud", email = "timothee.giraud@cnrs.fr",
     role = c("cre","aut"), comment = c(ORCID = "0000-0002-1932-3323")),
     person("Matthieu", "Viry", role = c("ctb"),
     comment = c(ORCID = "0000-0002-0693-8556")),
     person("Louis", "Laurian", role = c("ctb"),
     comment = c(ORCID = "0009-0002-7275-5536")))
-Description: Download and assemble multiple geographic layers from the OpenStreetMap database for mapping purposes.
+Description: The 'OpenStreetMap' database provides a wide range of highly
+    detailed geographic layers on a global scale. To obtain synthetic
+    information for cartographic purposes, layers must be selected, simplified,
+    merged, or modified. 'maposm' downloads OpenStreetMap extracts and performs
+    these operations to create a set of composite layers of urban areas,
+    buildings, green spaces, main roads, secondary roads, railways, and water
+    bodies.
 License: GPL-3
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.2.0)
 Imports: 
     sf,
     lwgeom,
-    tictoc,
     tools,
     mapsf,
     graphics,
-    osmdata
+    osmextract
 Encoding: UTF-8
 Language: en-US
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
